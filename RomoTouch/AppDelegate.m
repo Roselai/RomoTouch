@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Jongwon Lee. All rights reserved.
 //
 
+#import "ViewController.h"
+#import "PenguinViewController.h"
+#import "EmotionViewController.h"
+#import "ExpressionViewController.h"
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -13,12 +17,60 @@
 @end
 
 @implementation AppDelegate
-
+@synthesize window, tabBarController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    /* Initialize tab bar controller, add tabs controllers */
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = [self initializeTabBarItems];
+    self.window.rootViewController = self.tabBarController;
+    [self.window makeKeyAndVisible];
+
+
     return YES;
 }
+
+- (NSArray *)initializeTabBarItems
+{
+    NSArray * retval;
+    
+    /* Initialize view controllers */
+    PenguinViewController * viewController1 = [[PenguinViewController alloc] init];
+    EmotionViewController * viewController2 = [[EmotionViewController alloc] init];
+    ExpressionViewController * viewController3 = [[ExpressionViewController alloc] init];
+    
+    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //ViewController *controller = [storyboard instantiateInitialViewController];
+    
+    
+    /* Initialize navigation controllers */
+    UINavigationController * navigationController1;
+    navigationController1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
+    UINavigationController * navigationController2;
+    navigationController2 = [[UINavigationController alloc] initWithRootViewController:viewController2];
+    UINavigationController * navigationController3;
+    navigationController3 = [[UINavigationController alloc] initWithRootViewController:viewController3];
+    //UINavigationController *navigationController4;
+    //navigationController4 = [[UINavigationController alloc]
+    //                         initWithRootViewController: controller];
+    
+   // [controller.tabBarItem setTitle:@"Server"];
+   // [controller.tabBarItem setImage:[UIImage imageNamed:@"first"]];
+    
+    
+    /* Stuff Navigation Controllers into return value */
+    retval = [NSArray arrayWithObjects:viewController1,viewController2,viewController3, nil];
+    
+    /* Release Navigation Controllers */
+    
+    return (retval);
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
